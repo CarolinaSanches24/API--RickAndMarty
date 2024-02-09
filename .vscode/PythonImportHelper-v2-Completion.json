@@ -16,6 +16,14 @@
         "documentation": {}
     },
     {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "urllib.request,",
         "kind": 6,
         "isExtraImport": true,
@@ -66,6 +74,33 @@
         "importPath": "app",
         "description": "app",
         "peekOfCode": "def get_locations():\n    url = \"https://rickandmortyapi.com/api/location\";\n    response = urllib.request.urlopen(url) # envia a req e recebe a res\n    data = response.read(); # leitura dos dados vindos da api\n    dict = json.loads(data); # transforma esses dados em json p/ python\n    locations = [];\n    for location in dict[\"results\"]:\n        location = {\n            \"id\":location[\"id\"],\n            \"name\":location[\"name\"],",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_location",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_location(id):\n    url = f\"https://rickandmortyapi.com/api/location/{id}\"\n    response = urllib.request.urlopen(url) \n    data = response.read(); \n    location_dict = json.loads(data);\n    list_ids = [];\n    character_names = [];\n    for resident in location_dict[\"residents\"]:\n        resident_id = resident.split(\"/\")[-1]\n        list_ids.append(resident_id);",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_list_episodes",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_list_episodes():\n    url = \"https://rickandmortyapi.com/api/episode\";\n    response = urllib.request.urlopen(url) \n    data = response.read();\n    episodes_dict = json.loads(data); \n    episodes = [];\n    for episode in episodes_dict[\"results\"]:\n        episode = {\n            \"id\":episode[\"id\"],\n            \"name\":episode[\"name\"],",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_episode",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_episode(id):\n    url = f\"https://rickandmortyapi.com/api/episode/{id}\"\n    response = urllib.request.urlopen(url) \n    data = response.read(); \n    episode_dict = json.loads(data);\n    list_ids_characters = [];\n    character_names = [];\n    for character in episode_dict[\"characters\"]:\n        character_id = character.split(\"/\")[-1]\n        list_ids_characters.append(character_id);",
         "detail": "app",
         "documentation": {}
     },

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,  jsonify
 import urllib.request, json
 
 app = Flask (__name__)
@@ -66,7 +66,6 @@ def get_locations():
             "name":location["name"],
             "type":location["type"],
             "dimension":location["dimension"],
-            "residents":location["residents"]
         }
         
         locations.append(location);
@@ -79,5 +78,66 @@ def get_location(id):
     response = urllib.request.urlopen(url) 
     data = response.read(); 
     location_dict = json.loads(data);
+    list_ids = [];
+    character_names = [];
     
-    return render_template("location.html", location=location_dict);
+    for resident in location_dict["residents"]:
+        resident_id = resident.split("/")[-1]
+        list_ids.append(resident_id);
+        
+        # Consulta o nome do personagem pelo id e armazena na lista
+        character_url = f"https://rickandmortyapi.com/api/character/{resident_id}"
+        character_response = urllib.request.urlopen(character_url)
+        character_data = character_response.read()
+        character_dict = json.loads(character_data)
+        character_names.append(character_dict["name"])
+        
+    residents_info = list(zip(list_ids, character_names))
+        
+    return render_template("location.html", location=location_dict, residents_info = residents_info);
+
+# Listar Episodios
+@app.route("/episodes")
+def get_list_episodes():
+    url = "https://rickandmortyapi.com/api/episode";
+    response = urllib.request.urlopen(url) 
+    data = response.read();
+    episodes_dict = json.loads(data); 
+    
+    episodes = [];
+    
+    for episode in episodes_dict["results"]:
+        episode = {
+            "id":episode["id"],
+            "name":episode["name"],
+            "air_date":episode["air_date"],
+            "episode":episode["episode"]
+        }
+        episodes.append(episode);
+        
+    return render_template("episodes.html", episodes=episodes);
+
+@app.route("/episode/<id>") # obter uma location
+def get_episode(id):
+    url = f"https://rickandmortyapi.com/api/episode/{id}"
+    response = urllib.request.urlopen(url) 
+    data = response.read(); 
+    episode_dict = json.loads(data);
+    list_ids_characters = [];
+    character_names = [];
+    
+    for character in episode_dict["characters"]:
+        character_id = character.split("/")[-1]
+        list_ids_characters.append(character_id);
+        
+        # Consulta o nome do personagem pelo id e armazena na lista
+        character_url = f"https://rickandmortyapi.com/api/character/{character_id}"
+        character_response = urllib.request.urlopen(character_url)
+        character_data = character_response.read()
+        character_dict = json.loads(character_data)
+        character_names.append(character_dict["name"])
+        
+        
+        # characters_info = list(zip(list_ids_characters, character_names))
+        
+    return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
