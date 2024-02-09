@@ -1,1 +1,13 @@
-{% extends "layout.html"%} {% block content %}{% endblock %}
+{% extends "layout.html"%} {% block content %} <br /><br />
+
+<h3>Nome:"{{location.name}}"</h3>
+<p>Tipo:"{{location.type}}"</p>
+<p>Dimensão:"{{location.dimension}}"</p>
+<ul class="list-group" style="padding-left: 2em">
+  <b>Lista de Personagens:</b>
+  {% set residents_sorted = location.residents|sort %} {% for resident in
+  residents_sorted %}
+  <li>url: {{ resident }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
