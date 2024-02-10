@@ -13,14 +13,39 @@ def get_list_characters_page():
     return render_template("personagens.html", characters = dict["results"])
 
 @app.route("/profile/<id>") # obter um personagem
-
 def get_profile(id):
     url = "https://rickandmortyapi.com/api/character/"+id;
     response = urllib.request.urlopen(url) 
     data = response.read(); 
-    dict = json.loads(data);
+    character_data = json.loads(data);
+
+    list_episodes_ids = [];
     
-    return render_template("profile.html", profile = dict)
+    for episode in character_data['episode']:
+        episode_id = episode.split("/")[-1]
+        list_episodes_ids.append(episode_id);
+        
+    location_id= character_data["location"]["url"].split("/")[-1]
+
+    list_episodes_ids = [int(id) for id in list_episodes_ids]
+   
+    #Consulta para montar os dados do episodio
+    
+    url = "https://rickandmortyapi.com/api/episode";
+    response = urllib.request.urlopen(url) 
+    data = response.read();
+    episodes_dict = json.loads(data); 
+    
+    episodes_found = [];
+    
+    for episode in episodes_dict["results"]:
+        if episode["id"] in list_episodes_ids:
+            episodes_found.append ({
+                "id":episode["id"],
+            "name":episode["name"],
+            "episode":episode["episode"]
+        });
+    return render_template("profile.html", profile = character_data, episodes_found= episodes_found ,location_id= location_id)
 
 @app.route("/lista")
 
