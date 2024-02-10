@@ -1,9 +1,9 @@
 {% extends "layout.html"%} {% block content %} <br /><br />
 
-<h3>Nome:"{{location.name}}"</h3>
+<h3 class="title_perfil_location">Nome:"{{location.name}}"</h3>
 <p>Tipo:"{{location.type}}"</p>
 <p>Dimensão:"{{location.dimension}}"</p>
-<h3>Lista de Personagens que vivem em {{location.name}}</h3>
+<h3 class="title_perfil_location">Lista de Personagens que vivem em {{location.name}}</h3>
 <table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
@@ -18,7 +18,7 @@
       <td>"{{ resident_id }}"</td>
       <td>"{{ character_name }}"</td>
       <td>
-        <a href="/profile/{{resident_id}}" class="btn btn-primary">Ver Perfil do personagem</a>
+        <a href="/profile/{{resident_id}}" class="btn btn-primary teste">Ver Perfil do personagem</a>
       </td>
     </tr>
     {% endfor %}

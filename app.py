@@ -137,7 +137,5 @@ def get_episode(id):
         character_dict = json.loads(character_data)
         character_names.append(character_dict["name"])
         
-        
-        # characters_info = list(zip(list_ids_characters, character_names))
-        
     return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
+

@@ -24,12 +24,10 @@
         </ul>
       </td>
       <td>
-        <ul>
+        <ul class="links">
           {% for character_id in list_ids_characters %}
           <li>
-            <a href="/profile/{{ character_id}}" class="btn btn-primary"
-              >Ver Perfil do personagem</a
-            >
+            <a href="/profile/{{ character_id}}">Ver Perfil do personagem</a>
           </li>
           {% endfor %}
         </ul>

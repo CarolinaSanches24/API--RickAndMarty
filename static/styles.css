@@ -2,8 +2,45 @@ html,
 body {
   height: 100%;
 }
+:root {
+  --color-bgmenu: #171483;
+}
+
 body {
-  background-color: #0b0527;
+  background-image: radial-gradient(
+    circle at 120.71% 50%,
+    #cb4afa 0,
+    #933bd8 16.67%,
+    #5a28b0 33.33%,
+    #171483 50%,
+    #000057 66.67%,
+    #000031 83.33%,
+    #000015 100%
+  );
   margin: 0;
   padding: 0;
+}
+.row {
+  margin-top: 5%;
+}
+.container_menu {
+  background-color: #000057;
+}
+
+.h5,
+p,
+.title_perfil_location {
+  color: #fff;
+}
+a {
+  text-decoration: none;
+  color: #000015;
+}
+a:hover {
+  color: #171483;
+  font-size: 18px;
+  transition: 0.8s;
+}
+.links {
+  list-style: none;
 }
