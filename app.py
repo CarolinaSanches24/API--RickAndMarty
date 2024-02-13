@@ -1,6 +1,7 @@
 from flask import Flask, render_template,  jsonify
 import urllib.request, json
 
+
 app = Flask (__name__)
 
 @app.route("/") # rota de  URL raiz
@@ -20,13 +21,17 @@ def get_profile(id):
     character_data = json.loads(data);
 
     list_episodes_ids = [];
-    
+    # Para cada url transforma em array e paga o ultimo elemento depois da barra
+    #  "episode":["https://rickandmortyapi.com/api/episode/1"...]
+    #logo pega id do episodio e adiciona lista episodios
     for episode in character_data['episode']:
         episode_id = episode.split("/")[-1]
         list_episodes_ids.append(episode_id);
         
+    # pega o id da localização do personagem 
     location_id= character_data["location"]["url"].split("/")[-1]
-
+    
+    #Converte os elementos da lista para inteiro 
     list_episodes_ids = [int(id) for id in list_episodes_ids]
    
     #Consulta para montar os dados do episodio
@@ -45,7 +50,12 @@ def get_profile(id):
             "name":episode["name"],
             "episode":episode["episode"]
         });
-    return render_template("profile.html", profile = character_data, episodes_found= episodes_found ,location_id= location_id)
+    # Verifica se não foram encontrados episódios para este personagem
+    if not episodes_found:
+        error_message = "Não foram encontrados episódios para este personagem."
+        return render_template("profile.html", profile=character_data, error_message=error_message, location_id=location_id)
+
+    return render_template("profile.html", profile=character_data, episodes_found=episodes_found, location_id=location_id)
 
 @app.route("/lista")
 

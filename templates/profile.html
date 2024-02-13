@@ -21,6 +21,17 @@
     >
     <div class="container_lista_episodios">
       <p>Episodios que {{profile.name}} aparece:</p>
+      {% if error_message %}
+      <div class="container_Erro">
+        <img
+          src="../static/erro.png"
+          width="50px"
+          height="50px"
+          alt="imagem de um x vermelho simbolizando personagem não encontrado"
+        />
+        <p>{{ error_message }}</p>
+      </div>
+      {% else %}
       <ul>
         {% for episode in episodes_found %}
         <a href="/episode/{{episode.id}}" class="link_profile">
@@ -28,6 +39,7 @@
         </a>
         {% endfor %}
       </ul>
+      {%endif%}
     </div>
   </div>
 </div>

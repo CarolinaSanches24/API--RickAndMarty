@@ -4,6 +4,7 @@ body {
 }
 :root {
   --color-bgmenu: #171483;
+  --color-red: #ff0000;
 }
 
 body {
@@ -53,4 +54,13 @@ a:hover {
 .link_profile:hover {
   font-size: 12px;
   color: #cb4afa;
+}
+.container_Erro {
+  display: flex;
+}
+.container_Erro img {
+  padding: 1em;
+}
+.container_Erro p {
+  color: var(--color-red);
 }
