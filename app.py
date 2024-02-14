@@ -173,4 +173,3 @@ def get_episode(id):
         character_names.append(character_dict["name"])
         
     return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
-
