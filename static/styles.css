@@ -5,6 +5,7 @@ body {
 :root {
   --color-bgmenu: #171483;
   --color-red: #ff0000;
+  --color-white: #fff;
 }
 
 body {
@@ -63,4 +64,20 @@ a:hover {
 }
 .container_Erro p {
   color: var(--color-red);
+}
+.button_pagination {
+  display: flex;
+  justify-content: center;
+}
+.button_pagination button {
+  margin-left: 10px;
+  background-color: #000031;
+  color: var(--color-white);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: solid 2px var(--color-white);
+}
+.button_pagination button:hover {
+  background-color: #171483;
+  transition: 0.8s;
 }

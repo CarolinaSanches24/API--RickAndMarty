@@ -150,7 +150,41 @@ def get_list_episodes():
         }
         episodes.append(episode);
         
-    return render_template("episodes.html", episodes=episodes);
+    url = "https://rickandmortyapi.com/api/episode?page=2";
+    response = urllib.request.urlopen(url); 
+    data = response.read();
+    episodes_dict_pag_two = json.loads(data); 
+    
+    episodes_page_two = [];
+    
+    for episode in episodes_dict_pag_two["results"]:
+        episode = {
+            "id":episode["id"],
+            "name":episode["name"],
+            "air_date":episode["air_date"],
+            "episode":episode["episode"]
+        }
+        episodes_page_two.append(episode);
+        
+    url = "https://rickandmortyapi.com/api/episode?page=3";
+    response = urllib.request.urlopen(url); 
+    data = response.read();
+    episodes_dict_pag_tree = json.loads(data); 
+    
+    episodes_page_tree = [];
+    
+    for episode in episodes_dict_pag_tree["results"]:
+        episode = {
+            "id":episode["id"],
+            "name":episode["name"],
+            "air_date":episode["air_date"],
+            "episode":episode["episode"]
+        }
+        episodes_page_tree.append(episode);
+        
+    
+        
+    return render_template("episodes.html", episodes=episodes, episodes_page_two=episodes_page_two, episodes_page_tree=episodes_page_tree);
 
 @app.route("/episode/<id>") # obter uma location
 def get_episode(id):
