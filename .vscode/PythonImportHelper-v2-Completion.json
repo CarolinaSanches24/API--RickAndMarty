@@ -46,7 +46,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def get_profile(id):\n    url = \"https://rickandmortyapi.com/api/character/\"+id;\n    response = urllib.request.urlopen(url) \n    data = response.read(); \n    character_data = json.loads(data);\n    list_episodes_ids = [];\n    # Para cada url transforma em array e paga o ultimo elemento depois da barra\n    #  \"episode\":[\"https://rickandmortyapi.com/api/episode/1\"...]\n    #logo pega id do episodio e adiciona lista episodios\n    for episode in character_data['episode']:",
+        "peekOfCode": "def get_profile(id):\n    url = \"https://rickandmortyapi.com/api/character/\"+id;\n    response = urllib.request.urlopen(url) \n    data = response.read(); \n    character_data = json.loads(data);\n    list_info_episode = []\n    # Iterar sobre as três páginas de episódios\n    for page_number in range(1, 4):\n        url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n        response = urllib.request.urlopen(url) ",
         "detail": "app",
         "documentation": {}
     },

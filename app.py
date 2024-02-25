@@ -2,6 +2,7 @@ from flask import Flask, render_template,  jsonify
 import urllib.request, json
 
 
+
 app = Flask (__name__)
 
 @app.route("/") # rota de  URL raiz
@@ -13,6 +14,7 @@ def get_list_characters_page():
     
     return render_template("personagens.html", characters = dict["results"])
 
+
 @app.route("/profile/<id>") # obter um personagem
 def get_profile(id):
     url = "https://rickandmortyapi.com/api/character/"+id;
@@ -20,42 +22,47 @@ def get_profile(id):
     data = response.read(); 
     character_data = json.loads(data);
 
-    list_episodes_ids = [];
-    # Para cada url transforma em array e paga o ultimo elemento depois da barra
-    #  "episode":["https://rickandmortyapi.com/api/episode/1"...]
-    #logo pega id do episodio e adiciona lista episodios
-    for episode in character_data['episode']:
-        episode_id = episode.split("/")[-1]
-        list_episodes_ids.append(episode_id);
+    list_info_episode = []
+
+    # Iterar sobre as três páginas de episódios
+    for page_number in range(1, 4):
+        url = f"https://rickandmortyapi.com/api/episode?page={page_number}"
+        response = urllib.request.urlopen(url) 
+        data = response.read()
+        episodes_dict = json.loads(data)
+        episodes_results = episodes_dict["results"]
         
+        # Iterar sobre os resultados e extrair as informações desejadas
+        for episode_data in episodes_results:
+            episode_info = {
+                "id": episode_data["id"],
+                "name": episode_data["name"],
+                "episode": episode_data["episode"]
+            }
+            list_info_episode.append(episode_info)
+            
+    #Lista episodios que o personagem aparece
+    list_episodes_profile = [episode.split("/")[-1] for episode in character_data['episode']]
+    
+  
+    # Lista com episodios que o personagem aparece formatada 
+    episodes_appeared = []
+    
+    # Filtrar os episódios em que o personagem aparece
+    for episode_info in list_info_episode:
+        if str (episode_info["id"]) in list_episodes_profile:
+            episodes_appeared.append(episode_info)
+
+  
     # pega o id da localização do personagem 
     location_id= character_data["location"]["url"].split("/")[-1]
     
-    #Converte os elementos da lista para inteiro 
-    list_episodes_ids = [int(id) for id in list_episodes_ids]
-   
-    #Consulta para montar os dados do episodio
-    
-    url = "https://rickandmortyapi.com/api/episode";
-    response = urllib.request.urlopen(url) 
-    data = response.read();
-    episodes_dict = json.loads(data); 
-    
-    episodes_found = [];
-    
-    for episode in episodes_dict["results"]:
-        if episode["id"] in list_episodes_ids:
-            episodes_found.append ({
-                "id":episode["id"],
-            "name":episode["name"],
-            "episode":episode["episode"]
-        });
-    # Verifica se não foram encontrados episódios para este personagem
-    if not episodes_found:
+    #validação caso personagem não aparecer em um epsodio
+    if not episodes_appeared:
         error_message = "Não foram encontrados episódios para este personagem."
         return render_template("profile.html", profile=character_data, error_message=error_message, location_id=location_id)
 
-    return render_template("profile.html", profile=character_data, episodes_found=episodes_found, location_id=location_id)
+    return render_template("profile.html", profile=character_data, location_id=location_id,episodes_appeared=episodes_appeared)
 
 @app.route("/lista")
 

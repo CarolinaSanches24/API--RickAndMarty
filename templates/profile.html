@@ -33,7 +33,7 @@
       </div>
       {% else %}
       <ul>
-        {% for episode in episodes_found %}
+        {% for episode in episodes_appeared %}
         <a href="/episode/{{episode.id}}" class="link_profile">
           <li>{{ episode.name }} - {{ episode.episode }}</li>
         </a>
