@@ -51,15 +51,6 @@
         "documentation": {}
     },
     {
-        "label": "get_list_characters",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def get_list_characters():\n    url = \"https://rickandmortyapi.com/api/character\";\n    response = urllib.request.urlopen(url)\n    characters = response.read();\n    dict = json.loads(characters);\n    characters = []\n    for character in dict[\"results\"]:\n        character = {\n            \"name\":character[\"name\"],\n            \"status\":character[\"status\"]",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
         "label": "get_list_locations_page",
         "kind": 2,
         "importPath": "app",

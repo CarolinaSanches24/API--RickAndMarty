@@ -1,7 +1,7 @@
-html,
+/* html,
 body {
   height: 100%;
-}
+} */
 :root {
   --color-bgmenu: #171483;
   --color-red: #ff0000;
@@ -23,7 +23,7 @@ body {
   padding: 0;
 }
 .row {
-  margin-top: 5%;
+  margin-top: 20px;
 }
 .container_menu {
   background-color: #000057;
@@ -80,4 +80,24 @@ a:hover {
 .button_pagination button:hover {
   background-color: #171483;
   transition: 0.8s;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .imagem {
+    max-width: 500px;
+    margin-bottom: 25px;
+  }
+  .col-sm-3.col-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }

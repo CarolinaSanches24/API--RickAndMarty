@@ -64,24 +64,24 @@ def get_profile(id):
 
     return render_template("profile.html", profile=character_data, location_id=location_id,episodes_appeared=episodes_appeared)
 
-@app.route("/lista")
+# @app.route("/lista")
 
-def get_list_characters():
-    url = "https://rickandmortyapi.com/api/character";
-    response = urllib.request.urlopen(url)
-    characters = response.read();
-    dict = json.loads(characters);
+# def get_list_characters():
+#     url = "https://rickandmortyapi.com/api/character";
+#     response = urllib.request.urlopen(url)
+#     characters = response.read();
+#     dict = json.loads(characters);
     
-    characters = []
+#     characters = []
     
-    for character in dict["results"]:
-        character = {
-            "name":character["name"],
-            "status":character["status"]
-        }
+#     for character in dict["results"]:
+#         character = {
+#             "name":character["name"],
+#             "status":character["status"]
+#         }
         
-        characters.append(character);
-    return {"characters":characters}
+#         characters.append(character);
+#     return {"characters":characters}
 
 @app.route("/locations") # rota de locations
 def get_list_locations_page():
