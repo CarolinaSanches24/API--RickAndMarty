@@ -26,66 +26,10 @@
   </tbody>
 </table>
 
-<table class="table" id="episodes_page_two" style="display: none; width: 100%">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome do Episodio</th>
-      <th scope="col">Data de Lançamento</th>
-      <th scope="col">Código</th>
-      <th scope="col">Link página de perfil do Episódio</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {% for episode in episodes_page_two %}
-    <tr>
-      <th scope="row">{{episode.id}}</th>
-      <td>"{{episode.name}}"</td>
-      <td>"{{episode.air_date}}"</td>
-      <td>"{{episode.episode}}"</td>
-      <td>
-        <a href="/episode/{{episode.id}}" class="btn btn-primary"
-          >Ver Perfil do Episodio</a
-        >
-      </td>
-    </tr>
-    {% endfor%}
-  </tbody>
-</table>
-
-<table class="table" id="episodes_page_tree" style="display: none">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome do Episodio</th>
-      <th scope="col">Data de Lançamento</th>
-      <th scope="col">Código</th>
-      <th scope="col">Link página de perfil do Episódio</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {% for episode in episodes_page_tree %}
-    <tr>
-      <th scope="row">{{episode.id}}</th>
-      <td>"{{episode.name}}"</td>
-      <td>"{{episode.air_date}}"</td>
-      <td>"{{episode.episode}}"</td>
-      <td>
-        <a href="/episode/{{episode.id}}" class="btn btn-primary"
-          >Ver Perfil do Episodio</a
-        >
-      </td>
-    </tr>
-    {% endfor%}
-  </tbody>
-</table>
 <div class="button_pagination">
-  <button onclick="showEpisodes('episodes_list')">1</button>
-  <button onclick="showEpisodes('episodes_page_two')">2</button>
-  <button onclick="showEpisodes('episodes_page_tree')">3</button>
+  {% for page in range(1, 3 + 1) %}
+  <a href="/episodes/page/{{ page }}" class="button">{{ page }}</a>
+  {% endfor %}
 </div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}

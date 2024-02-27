@@ -64,24 +64,6 @@ def get_profile(id):
 
     return render_template("profile.html", profile=character_data, location_id=location_id,episodes_appeared=episodes_appeared)
 
-# @app.route("/lista")
-
-# def get_list_characters():
-#     url = "https://rickandmortyapi.com/api/character";
-#     response = urllib.request.urlopen(url)
-#     characters = response.read();
-#     dict = json.loads(characters);
-    
-#     characters = []
-    
-#     for character in dict["results"]:
-#         character = {
-#             "name":character["name"],
-#             "status":character["status"]
-#         }
-        
-#         characters.append(character);
-#     return {"characters":characters}
 
 @app.route("/locations") # rota de locations
 def get_list_locations_page():
@@ -138,6 +120,38 @@ def get_location(id):
         
     return render_template("location.html", location=location_dict, residents_info = residents_info);
 
+EPISODES_PER_PAGE = 20
+# paginação de episodios
+EPISODES_PER_PAGE = 20
+
+@app.route('/episodes/page/<int:page_number>')
+def episodes(page_number):
+    # Construa a URL da API com base no número da página
+    url = f"https://rickandmortyapi.com/api/episode?page={page_number}"
+    
+    # Faça a solicitação para a API
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    episodes_data = json.loads(data)
+    
+    # Extrair os episódios da resposta da API
+    episodes = []
+    for episode in episodes_data["results"]:
+        episode_info = {
+            "id": episode["id"],
+            "name": episode["name"],
+            "air_date": episode["air_date"],
+            "episode_code": episode["episode"]
+        }
+        episodes.append(episode_info)
+    
+    # Calcular o número total de páginas
+    total_episodes = len(episodes_data["results"])
+    num_pages = total_episodes // EPISODES_PER_PAGE + 1 
+    
+    # Passar os dados dos episódios e o número total de páginas para o template Jinja2
+    return render_template("episodes.html", episodes=episodes, num_pages=num_pages, current_page=page_number)
+    
 # Listar Episodios
 @app.route("/episodes")
 def get_list_episodes():
