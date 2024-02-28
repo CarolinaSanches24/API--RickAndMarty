@@ -1,5 +1,6 @@
-from flask import Flask, render_template,  jsonify
-import urllib.request, json
+from flask import Flask, render_template
+import urllib.request
+import json
 
 
 
@@ -174,27 +175,30 @@ def get_list_episodes():
     except Exception as e:
         return f"Erro ao consultar dados: {str(e)}"
     
-@app.route("/episode/<id>") # obter uma location
+@app.route("/episode/<id>")
 def get_episode(id):
     try:
         url = f"https://rickandmortyapi.com/api/episode/{id}"
         response = urllib.request.urlopen(url) 
         data = response.read(); 
-        episode_dict = json.loads(data);
-        list_ids_characters = [];
-        character_names = [];
-    
+        episode_dict = json.loads(data)
+        list_ids_characters = []
+        character_names = []
+
         for character in episode_dict["characters"]:
             character_id = character.split("/")[-1]
-            list_ids_characters.append(character_id);
-            
+            list_ids_characters.append(character_id)
+
             # Consulta o nome do personagem pelo id e armazena na lista
             character_url = f"https://rickandmortyapi.com/api/character/{character_id}"
             character_response = urllib.request.urlopen(character_url)
             character_data = character_response.read()
             character_dict = json.loads(character_data)
             character_names.append(character_dict["name"])
-        
-        return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
+
+        # Combine as duas listas em uma lista de tuplas
+        character_info = list(zip(character_names, list_ids_characters))
+
+        return render_template("episode.html", episode=episode_dict, character_info=character_info)
     except Exception as e:
         return f"Erro ao consultar dados: {str(e)}"

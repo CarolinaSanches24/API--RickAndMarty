@@ -16,20 +16,21 @@
         "documentation": {}
     },
     {
-        "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "urllib.request",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "flask",
+        "importPath": "urllib.request",
+        "description": "urllib.request",
+        "detail": "urllib.request",
         "documentation": {}
     },
     {
-        "label": "urllib.request,",
+        "label": "json",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "urllib.request.",
-        "description": "urllib.request.",
-        "detail": "urllib.request.",
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -100,7 +101,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def get_episode(id):\n    try:\n        url = f\"https://rickandmortyapi.com/api/episode/{id}\"\n        response = urllib.request.urlopen(url) \n        data = response.read(); \n        episode_dict = json.loads(data);\n        list_ids_characters = [];\n        character_names = [];\n        for character in episode_dict[\"characters\"]:\n            character_id = character.split(\"/\")[-1]",
+        "peekOfCode": "def get_episode(id):\n    try:\n        url = f\"https://rickandmortyapi.com/api/episode/{id}\"\n        response = urllib.request.urlopen(url) \n        data = response.read(); \n        episode_dict = json.loads(data)\n        list_ids_characters = []\n        character_names = []\n        for character in episode_dict[\"characters\"]:\n            character_id = character.split(\"/\")[-1]",
         "detail": "app",
         "documentation": {}
     },

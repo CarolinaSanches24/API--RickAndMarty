@@ -17,36 +17,25 @@
     </tr>
   </tbody>
 </table>
+
 <table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Lista de Personagens</th>
-      <th scope="col" class="ocultar_elemento">Perfil do Personagem</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>
-        {% for character_name in characters_names %} {{ character_name }}<br />
-        <a href="/profile/{{ character_id }}"
-          ><img
-            src="{{ url_for('static', filename='images/visao.png') }}"
-            width="32"
-            height="32"
-            alt="icone de visualização"
-            title="ver perfil do episodio"
-            class="view_icon"
-        /></a>
-        {% endfor %}
-      </td>
-      <td class="ocultar_elemento">
-        {% for character_id in list_ids_characters %}
+        {% for character_name, character_id in character_info %}
+        <strong>{{ character_name }}</strong><br />
         <a href="/profile/{{ character_id }}" class="btn btn-primary"
-          >Ver Perfil do personagem</a
+          >Ver Perfil do Personagem</a
         ><br />
         {% endfor %}
       </td>
     </tr>
   </tbody>
 </table>
+
 {% endblock %}
