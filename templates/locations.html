@@ -6,17 +6,27 @@
       <th scope="col">Nome</th>
       <th scope="col">Tipo</th>
       <th scope="col">Dimensão</th>
-      <th scope="col">Link perfil localização</th>
+      <th scope="col" class="ocultar_elemento">Link perfil localização</th>
     </tr>
   </thead>
   <tbody>
     {% for location in locations %}
     <tr>
       <th scope="row">{{location.id}}</th>
-      <td>"{{location.name}}"</td>
+      <td>
+        "{{location.name}}"<a href="/location/{{location.id}}">
+          <img
+            src="{{ url_for('static', filename='images/visao.png') }}"
+            width="32"
+            height="32"
+            alt="icone de visualização"
+            title="ver perfil da localização"
+            class="view_icon"
+        /></a>
+      </td>
       <td>"{{location.type}}"</td>
       <td>"{{location.dimension}}"</td>
-      <td>
+      <td class="ocultar_elemento">
         <a href="/location/{{location.id}}" class="btn btn-primary"
           >Ver Perfil da Localização</a
         >

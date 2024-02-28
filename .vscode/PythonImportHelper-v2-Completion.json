@@ -82,7 +82,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def episodes(page_number):\n    # Construa a URL da API com base no número da página\n    url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n    # Faça a solicitação para a API\n    response = urllib.request.urlopen(url)\n    data = response.read()\n    episodes_data = json.loads(data)\n    # Extrair os episódios da resposta da API\n    episodes = []\n    for episode in episodes_data[\"results\"]:",
+        "peekOfCode": "def episodes(page_number):\n    try:\n        url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n        response = urllib.request.urlopen(url)\n        data = response.read()\n        episodes_data = json.loads(data)\n        episodes = []\n        for episode in episodes_data[\"results\"]:\n            episode_info = {\n                \"id\": episode[\"id\"],",
         "detail": "app",
         "documentation": {}
     },
@@ -91,7 +91,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def get_list_episodes():\n    url = \"https://rickandmortyapi.com/api/episode\";\n    response = urllib.request.urlopen(url) \n    data = response.read();\n    episodes_dict = json.loads(data); \n    episodes = [];\n    for episode in episodes_dict[\"results\"]:\n        episode = {\n            \"id\":episode[\"id\"],\n            \"name\":episode[\"name\"],",
+        "peekOfCode": "def get_list_episodes():\n    try:\n        url = \"https://rickandmortyapi.com/api/episode\";\n        response = urllib.request.urlopen(url) \n        data = response.read();\n        episodes_dict = json.loads(data); \n        episodes = [];\n        for episode in episodes_dict[\"results\"]:\n            episode = {\n                \"id\":episode[\"id\"],",
         "detail": "app",
         "documentation": {}
     },
@@ -100,7 +100,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def get_episode(id):\n    url = f\"https://rickandmortyapi.com/api/episode/{id}\"\n    response = urllib.request.urlopen(url) \n    data = response.read(); \n    episode_dict = json.loads(data);\n    list_ids_characters = [];\n    character_names = [];\n    for character in episode_dict[\"characters\"]:\n        character_id = character.split(\"/\")[-1]\n        list_ids_characters.append(character_id);",
+        "peekOfCode": "def get_episode(id):\n    try:\n        url = f\"https://rickandmortyapi.com/api/episode/{id}\"\n        response = urllib.request.urlopen(url) \n        data = response.read(); \n        episode_dict = json.loads(data);\n        list_ids_characters = [];\n        character_names = [];\n        for character in episode_dict[\"characters\"]:\n            character_id = character.split(\"/\")[-1]",
         "detail": "app",
         "documentation": {}
     },
@@ -118,16 +118,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "EPISODES_PER_PAGE = 20\n# paginação de episodios\nEPISODES_PER_PAGE = 20\n@app.route('/episodes/page/<int:page_number>')\ndef episodes(page_number):\n    # Construa a URL da API com base no número da página\n    url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n    # Faça a solicitação para a API\n    response = urllib.request.urlopen(url)\n    data = response.read()",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "EPISODES_PER_PAGE",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "EPISODES_PER_PAGE = 20\n@app.route('/episodes/page/<int:page_number>')\ndef episodes(page_number):\n    # Construa a URL da API com base no número da página\n    url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n    # Faça a solicitação para a API\n    response = urllib.request.urlopen(url)\n    data = response.read()\n    episodes_data = json.loads(data)\n    # Extrair os episódios da resposta da API",
+        "peekOfCode": "EPISODES_PER_PAGE = 20\n@app.route('/episodes/page/<int:page_number>')\ndef episodes(page_number):\n    try:\n        url = f\"https://rickandmortyapi.com/api/episode?page={page_number}\"\n        response = urllib.request.urlopen(url)\n        data = response.read()\n        episodes_data = json.loads(data)\n        episodes = []\n        for episode in episodes_data[\"results\"]:",
         "detail": "app",
         "documentation": {}
     }

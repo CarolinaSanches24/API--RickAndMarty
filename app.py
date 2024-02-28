@@ -120,111 +120,81 @@ def get_location(id):
         
     return render_template("location.html", location=location_dict, residents_info = residents_info);
 
-EPISODES_PER_PAGE = 20
 # paginação de episodios
 EPISODES_PER_PAGE = 20
 
 @app.route('/episodes/page/<int:page_number>')
 def episodes(page_number):
-    # Construa a URL da API com base no número da página
-    url = f"https://rickandmortyapi.com/api/episode?page={page_number}"
-    
-    # Faça a solicitação para a API
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    episodes_data = json.loads(data)
-    
-    # Extrair os episódios da resposta da API
-    episodes = []
-    for episode in episodes_data["results"]:
-        episode_info = {
-            "id": episode["id"],
-            "name": episode["name"],
-            "air_date": episode["air_date"],
-            "episode_code": episode["episode"]
-        }
-        episodes.append(episode_info)
-    
-    # Calcular o número total de páginas
-    total_episodes = len(episodes_data["results"])
-    num_pages = total_episodes // EPISODES_PER_PAGE + 1 
-    
-    # Passar os dados dos episódios e o número total de páginas para o template Jinja2
-    return render_template("episodes.html", episodes=episodes, num_pages=num_pages, current_page=page_number)
-    
+    try:
+        url = f"https://rickandmortyapi.com/api/episode?page={page_number}"
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        episodes_data = json.loads(data)
+
+        episodes = []
+        for episode in episodes_data["results"]:
+            episode_info = {
+                "id": episode["id"],
+                "name": episode["name"],
+                "air_date": episode["air_date"],
+                "episode": episode["episode"]
+            }
+            episodes.append(episode_info)
+
+        total_episodes = len(episodes_data["results"])
+        num_pages = total_episodes // EPISODES_PER_PAGE + 1 
+
+        return render_template("episodes.html", episodes=episodes, num_pages=num_pages, current_page=page_number)
+
+    except Exception as e:
+        return f"Erro ao consultar dados: {str(e)}"
+
 # Listar Episodios
 @app.route("/episodes")
 def get_list_episodes():
-    url = "https://rickandmortyapi.com/api/episode";
-    response = urllib.request.urlopen(url) 
-    data = response.read();
-    episodes_dict = json.loads(data); 
+    try:
+        url = "https://rickandmortyapi.com/api/episode";
+        response = urllib.request.urlopen(url) 
+        data = response.read();
+        episodes_dict = json.loads(data); 
     
-    episodes = [];
+        episodes = [];
     
-    for episode in episodes_dict["results"]:
-        episode = {
-            "id":episode["id"],
-            "name":episode["name"],
-            "air_date":episode["air_date"],
-            "episode":episode["episode"]
-        }
-        episodes.append(episode);
+        for episode in episodes_dict["results"]:
+            episode = {
+                "id":episode["id"],
+                "name":episode["name"],
+                "air_date":episode["air_date"],
+                "episode":episode["episode"]
+            }
+            episodes.append(episode);
         
-    url = "https://rickandmortyapi.com/api/episode?page=2";
-    response = urllib.request.urlopen(url); 
-    data = response.read();
-    episodes_dict_pag_two = json.loads(data); 
+        return render_template("episodes.html", episodes=episodes);
     
-    episodes_page_two = [];
+    except Exception as e:
+        return f"Erro ao consultar dados: {str(e)}"
     
-    for episode in episodes_dict_pag_two["results"]:
-        episode = {
-            "id":episode["id"],
-            "name":episode["name"],
-            "air_date":episode["air_date"],
-            "episode":episode["episode"]
-        }
-        episodes_page_two.append(episode);
-        
-    url = "https://rickandmortyapi.com/api/episode?page=3";
-    response = urllib.request.urlopen(url); 
-    data = response.read();
-    episodes_dict_pag_tree = json.loads(data); 
-    
-    episodes_page_tree = [];
-    
-    for episode in episodes_dict_pag_tree["results"]:
-        episode = {
-            "id":episode["id"],
-            "name":episode["name"],
-            "air_date":episode["air_date"],
-            "episode":episode["episode"]
-        }
-        episodes_page_tree.append(episode);
-        
-    
-        
-    return render_template("episodes.html", episodes=episodes, episodes_page_two=episodes_page_two, episodes_page_tree=episodes_page_tree);
-
 @app.route("/episode/<id>") # obter uma location
 def get_episode(id):
-    url = f"https://rickandmortyapi.com/api/episode/{id}"
-    response = urllib.request.urlopen(url) 
-    data = response.read(); 
-    episode_dict = json.loads(data);
-    list_ids_characters = [];
-    character_names = [];
+    try:
+        url = f"https://rickandmortyapi.com/api/episode/{id}"
+        response = urllib.request.urlopen(url) 
+        data = response.read(); 
+        episode_dict = json.loads(data);
+        list_ids_characters = [];
+        character_names = [];
     
-    for character in episode_dict["characters"]:
-        character_id = character.split("/")[-1]
-        list_ids_characters.append(character_id);
+        for character in episode_dict["characters"]:
+            character_id = character.split("/")[-1]
+            list_ids_characters.append(character_id);
+            
+            # Consulta o nome do personagem pelo id e armazena na lista
+            character_url = f"https://rickandmortyapi.com/api/character/{character_id}"
+            character_response = urllib.request.urlopen(character_url)
+            character_data = character_response.read()
+            character_dict = json.loads(character_data)
+            character_names.append(character_dict["name"])
         
-        # Consulta o nome do personagem pelo id e armazena na lista
-        character_url = f"https://rickandmortyapi.com/api/character/{character_id}"
-        character_response = urllib.request.urlopen(character_url)
-        character_data = character_response.read()
-        character_dict = json.loads(character_data)
-        character_names.append(character_dict["name"])
-        
-    return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
+        return render_template("episode.html", episode=episode_dict, list_ids_characters = list_ids_characters, characters_names = character_names);
+    except Exception as e:
+        return f"Erro ao consultar dados: {str(e)}"

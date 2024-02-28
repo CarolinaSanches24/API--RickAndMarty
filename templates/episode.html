@@ -6,8 +6,6 @@
       <th scope="col">Nome do Episodio</th>
       <th scope="col">Data de Lançamento</th>
       <th scope="col">Código</th>
-      <th scope="col">Lista de Personagens</th>
-      <th scope="col">Perfil do Personagem</th>
     </tr>
   </thead>
   <tbody>
@@ -16,21 +14,37 @@
       <td>{{ episode.name }}</td>
       <td>{{ episode.air_date }}</td>
       <td>{{ episode.episode }}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Lista de Personagens</th>
+      <th scope="col" class="ocultar_elemento">Perfil do Personagem</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
       <td>
-        <ul>
-          {% for character_name in characters_names %}
-          <li>{{ character_name }}</li>
-          {% endfor %}
-        </ul>
+        {% for character_name in characters_names %} {{ character_name }}<br />
+        <a href="/profile/{{ character_id }}"
+          ><img
+            src="{{ url_for('static', filename='images/visao.png') }}"
+            width="32"
+            height="32"
+            alt="icone de visualização"
+            title="ver perfil do episodio"
+            class="view_icon"
+        /></a>
+        {% endfor %}
       </td>
-      <td>
-        <ul class="links">
-          {% for character_id in list_ids_characters %}
-          <li>
-            <a href="/profile/{{ character_id}}">Ver Perfil do personagem</a>
-          </li>
-          {% endfor %}
-        </ul>
+      <td class="ocultar_elemento">
+        {% for character_id in list_ids_characters %}
+        <a href="/profile/{{ character_id }}" class="btn btn-primary"
+          >Ver Perfil do personagem</a
+        ><br />
+        {% endfor %}
       </td>
     </tr>
   </tbody>
